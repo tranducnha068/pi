@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Countdown Kỷ Niệm</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <canvas id="particle-canvas"></canvas>
+
+  <main class="page-wrap">
+    <section class="countdown-shell">
+      
+      <h1>Đếm ngược tới 30/05/2026</h1>
+      <div class="progress-card">
+        <div class="progress-label-row">
+          <span>Hành trình kỷ niệm</span>
+          <span id="progressPercent">83%</span>
+        </div>
+        <div class="progress-track">
+          <div class="progress-fill" id="progressFill"></div>
+        </div>
+      </div>
+
+      <div class="outer-box">
+        <div class="count-grid">
+          <div class="time-box">
+            <span id="days">000</span>
+            <small>Ngày</small>
+          </div>
+          <div class="time-box">
+            <span id="hours">00</span>
+            <small>Giờ</small>
+          </div>
+          <div class="time-box">
+            <span id="minutes">00</span>
+            <small>Phút</small>
+          </div>
+          <div class="time-box">
+            <span id="seconds">00</span>
+            <small>Giây</small>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>
