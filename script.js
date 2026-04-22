@@ -4,6 +4,21 @@ const progressStartDate = new Date("2025-08-01T00:00:00");
 const startPopup = document.getElementById("startPopup");
 const startBtn = document.getElementById("startBtn");
 const bgMusic = document.getElementById("bgMusic");
+window.onload = function() {
+  const canvas = document.getElementById("particleCanvas");
+  if (canvas) {
+    const ctx = canvas.getContext("2d");
+    resizeCanvas();
+    createParticles();
+    drawParticles();
+    window.addEventListener("resize", () => {
+      resizeCanvas();
+      createParticles();
+    });
+  } else {
+    console.error("Không tìm thấy canvas!");
+  }
+};
 
 const countdownEls = {
   days: document.getElementById("days"),
@@ -172,4 +187,5 @@ if (canvas && ctx) {
     resizeCanvas();
     createParticles();
   });
+  
 }
