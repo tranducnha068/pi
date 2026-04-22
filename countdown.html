@@ -5,127 +5,70 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Đếm ngày cùng mình nha ♥</title>
 <script src="js/heart.js"></script>
-  <style>
-    * { box-sizing: border-box; margin: 0; padding: 0; }
+ <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap"
+    rel="stylesheet"
+  />
 
-    body {
-      font-family: sans-serif;
-      background: url('bigstock-Festive-Background-With-Natura-80575025-1000x667.webp') center/cover fixed no-repeat;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      height: 100vh;
-      color: #fff;
-    }
-
-    .countdown-wrapper {
-      background: rgba(255, 255, 255, 0.08);
-      backdrop-filter: blur(15px);
-      -webkit-backdrop-filter: blur(15px);
-      border-radius: 1rem;
-      padding: 1.5rem;
-      border: 1px solid rgba(255,255,255,0.2);
-      box-shadow: 0 0 25px rgba(255,255,255,0.2),
-                  0 0 50px rgba(138,43,226,0.3);
-      width: 380px;
-      transition: all 0.3s ease-in-out;
-    }
-
-    .time-container {
-      display: flex;
-      gap: 0.5rem;
-    }
-
-    .time-box {
-      flex: 1;
-      padding: 0.75rem 0;
-      text-align: center;
-      border-radius: 0.5rem;
-      background: rgba(255, 255, 255, 0.12);
-      backdrop-filter: blur(6px);
-      box-shadow: inset 0 0 12px rgba(255,255,255,0.15);
-      animation: shimmer 4s infinite alternate;
-    }
-
-    @keyframes shimmer {
-      from { box-shadow: inset 0 0 12px rgba(255,255,255,0.15); }
-      to   { box-shadow: inset 0 0 20px rgba(255,255,255,0.4); }
-    }
-
-    .number {
-      font-size: 2.5rem;
-      font-weight: bold;
-      text-shadow: 0 0 10px rgba(255,255,255,0.9),
-                   0 0 20px rgba(173,216,230,0.6);
-    }
-
-    .unit {
-      margin-top: 0.25rem;
-      font-size: 0.85rem;
-    }
-  </style>
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <div class="countdown-wrapper">
-    <h2 style="text-align:center; margin-bottom:1rem;">Đếm ngược tới ngày 25/05/2026</h2>
-    <div class="time-container">
-      <div class="time-box">
-        <div id="days"   class="number">00</div>
-        <div class="unit">Ngày</div>
-      </div>
-      <div class="time-box">
-        <div id="hours"  class="number">00</div>
-        <div class="unit">Giờ</div>
-      </div>
-      <div class="time-box">
-        <div id="minutes" class="number">00</div>
-        <div class="unit">Phút</div>
-      </div>
-      <div class="time-box">
-        <div id="seconds" class="number">00</div>
-        <div class="unit">Giây</div>
-      </div>
+  <canvas id="particleCanvas"></canvas>
+
+  <div id="startPopup" class="popup-overlay">
+    <div class="popup-box">
+      <h2 class="popup-title">bấm vào đây để bắt đầu nha</h2>
+      <button id="startBtn" class="popup-btn">bắt đầu</button>
     </div>
-    <audio autoplay loop>
-      <source src="basubexo.m4a" type="audio/mpeg">
-    </audio>
   </div>
 
-  <script>
-    document.addEventListener("DOMContentLoaded", () => {
-      const title = "♥♥♥ Đếm ngày cùng Pi nha ";
-      let idx = 0;
-      setInterval(() => {
-        document.title = title.slice(idx) + title.slice(0, idx);
-        idx = (idx + 1) % title.length;
-      }, 150);
+  <main class="countdown-page">
+    <section class="countdown-container">
+      <h1 class="countdown-title">đếm ngược tới 27/5/2026</h1>
 
-      const targetDate = new Date(2026, 4, 25, 0, 0, 0);  
-      const ids = ['days','hours','minutes','seconds'];
+      <div class="countdown-frame">
+        <div class="countdown-grid">
+          <div class="time-card">
+            <span id="days" class="time-value">000</span>
+            <span class="time-label">ngày</span>
+          </div>
 
-      function update() {
-        const diff = targetDate - new Date();
-        if (diff <= 0) {
-          ids.forEach(id => document.getElementById(id).textContent = '00');
-          clearInterval(timer);
-          alert("Hết giờ rồi ♥");
-          return;
-        }
-        const days    = Math.floor(diff / (1000 * 60 * 60 * 24));
-        const hours   = Math.floor((diff / (1000 * 60 * 60)) % 24);
-        const minutes = Math.floor((diff / (1000 * 60)) % 60);
-        const seconds = Math.floor((diff / 1000) % 60);
+          <div class="time-card">
+            <span id="hours" class="time-value">00</span>
+            <span class="time-label">giờ</span>
+          </div>
 
-        const pad = n => String(n).padStart(2,'0');
-        document.getElementById('days').textContent    = pad(days);
-        document.getElementById('hours').textContent   = pad(hours);
-        document.getElementById('minutes').textContent = pad(minutes);
-        document.getElementById('seconds').textContent = pad(seconds);
-      }
+          <div class="time-card">
+            <span id="minutes" class="time-value">00</span>
+            <span class="time-label">phút</span>
+          </div>
 
-      const timer = setInterval(update, 1000);
-      update();
-    });
-  </script>
+          <div class="time-card">
+            <span id="seconds" class="time-value">00</span>
+            <span class="time-label">giây</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="progress-block">
+        <div class="progress-top">
+          <span>Hành trình 3 năm đang đi tới đây rồi nè</span>
+          <span id="progressPercent">0%</span>
+        </div>
+
+        <div class="progress-bar">
+          <div id="progressFill" class="progress-fill"></div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <audio id="bgMusic" loop>
+    <source src="media/music/song.mp3" type="audio/mpeg" />
+  </audio>
+
+  <script src="script.js"></script>
 </body>
 </html>
