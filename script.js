@@ -28,7 +28,7 @@ function updateCountdown() {
   const distance = targetDate - now;
 
   if (distance <= 0) {
-    if (countdownEls.days) countdownEls.days.textContent = "00";
+    if (countdownEls.days) countdownEls.days.textContent = "000";
     if (countdownEls.hours) countdownEls.hours.textContent = "00";
     if (countdownEls.minutes) countdownEls.minutes.textContent = "00";
     if (countdownEls.seconds) countdownEls.seconds.textContent = "00";
@@ -50,7 +50,7 @@ function updateCountdown() {
   const minutes = Math.floor((distance / (1000 * 60)) % 60);
   const seconds = Math.floor((distance / 1000) % 60);
 
-  if (countdownEls.days) countdownEls.days.textContent = pad(days, 3);
+  if (countdownEls.days) countdownEls.days.textContent = pad(days, 2);
   if (countdownEls.hours) countdownEls.hours.textContent = pad(hours);
   if (countdownEls.minutes) countdownEls.minutes.textContent = pad(minutes);
   if (countdownEls.seconds) countdownEls.seconds.textContent = pad(seconds);
