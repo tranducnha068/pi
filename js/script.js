@@ -1,6 +1,8 @@
+/* ===== setup dates ===== */
 const targetDate = new Date("2026-05-27T00:00:00");
 const progressStartDate = new Date("2025-08-01T00:00:00");
 
+/* ===== elements ===== */
 const startPopup = document.getElementById("startPopup");
 const startBtn = document.getElementById("startBtn");
 const bgMusic = document.getElementById("bgMusic");
@@ -67,7 +69,6 @@ function updateCountdown() {
 
 function startCountdownLoop() {
   updateCountdown();
-
   if (!countdownInterval) {
     countdownInterval = setInterval(updateCountdown, 1000);
   }
@@ -95,7 +96,8 @@ async function startExperience() {
   }
 
   if (startPopup) {
-    startPopup.style.display = "none";
+    // dùng class .hide để khớp CSS
+    startPopup.classList.add("hide");
   }
 
   startCountdownLoop();
@@ -106,9 +108,7 @@ if (startBtn) {
 }
 
 /* ===== particle ===== */
-const canvas = document.getElementById("particleCanvas");
-const ctx = canvas ? canvas.getContext("2d") : null;
-let particles = [];
+let canvas, ctx, particles = [];
 
 function resizeCanvas() {
   if (!canvas) return;
@@ -163,22 +163,15 @@ function drawParticles() {
   requestAnimationFrame(drawParticles);
 }
 
-if (canvas && ctx) {
-  resizeCanvas();
-  createParticles();
-  drawParticles();
-
-  window.addEventListener("resize", () => {
-    resizeCanvas();
-    createParticles();
-  });
-  document.addEventListener("DOMContentLoaded", () => {
-  const canvas = document.getElementById("particleCanvas");
+/* ===== init after DOM ready ===== */
+document.addEventListener("DOMContentLoaded", () => {
+  canvas = document.getElementById("particleCanvas");
   if (canvas) {
-    const ctx = canvas.getContext("2d");
+    ctx = canvas.getContext("2d");
     resizeCanvas();
     createParticles();
     drawParticles();
+
     window.addEventListener("resize", () => {
       resizeCanvas();
       createParticles();
@@ -187,5 +180,3 @@ if (canvas && ctx) {
     console.error("Canvas không tồn tại!");
   }
 });
-
-}
