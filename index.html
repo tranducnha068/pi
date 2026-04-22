@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Countdown</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap"
+    rel="stylesheet"
+  />
+
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <canvas id="particleCanvas"></canvas>
+
+  <div id="startPopup" class="popup-overlay">
+    <div class="popup-box">
+      <h2 class="popup-title">bấm vào đây để bắt đầu nha</h2>
+      <button id="startBtn" class="popup-btn">bắt đầu</button>
+    </div>
+  </div>
+
+  <main class="countdown-page">
+    <section class="countdown-container">
+      <h1 class="countdown-title">đếm ngược tới 27/5/2026</h1>
+
+      <div class="countdown-frame">
+        <div class="countdown-grid">
+          <div class="time-card">
+            <span id="days" class="time-value">000</span>
+            <span class="time-label">ngày</span>
+          </div>
+
+          <div class="time-card">
+            <span id="hours" class="time-value">00</span>
+            <span class="time-label">giờ</span>
+          </div>
+
+          <div class="time-card">
+            <span id="minutes" class="time-value">00</span>
+            <span class="time-label">phút</span>
+          </div>
+
+          <div class="time-card">
+            <span id="seconds" class="time-value">00</span>
+            <span class="time-label">giây</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="progress-block">
+        <div class="progress-top">
+          <span>Hành trình 3 năm đang đi tới đây rồi nè</span>
+          <span id="progressPercent">0%</span>
+        </div>
+
+        <div class="progress-bar">
+          <div id="progressFill" class="progress-fill"></div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <audio id="bgMusic" loop>
+    <source src="media/music/song.mp3" type="audio/mpeg" />
+  </audio>
+
+  <script src="script.js"></script>
+</body>
+</html>
