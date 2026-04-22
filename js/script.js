@@ -106,22 +106,6 @@ if (startBtn) {
 }
 
 /* ===== particle ===== */
-document.addEventListener("DOMContentLoaded", () => {
-  const canvas = document.getElementById("particleCanvas");
-  if (canvas) {
-    const ctx = canvas.getContext("2d");
-    resizeCanvas();
-    createParticles();
-    drawParticles();
-    window.addEventListener("resize", () => {
-      resizeCanvas();
-      createParticles();
-    });
-  } else {
-    console.error("Canvas không tồn tại!");
-  }
-});
-
 const canvas = document.getElementById("particleCanvas");
 const ctx = canvas ? canvas.getContext("2d") : null;
 let particles = [];
@@ -188,4 +172,21 @@ if (canvas && ctx) {
     resizeCanvas();
     createParticles();
   });
+  document.addEventListener("DOMContentLoaded", () => {
+  const canvas = document.getElementById("particleCanvas");
+  if (canvas) {
+    const ctx = canvas.getContext("2d");
+    resizeCanvas();
+    createParticles();
+    drawParticles();
+    window.addEventListener("resize", () => {
+      resizeCanvas();
+      createParticles();
+    });
+  } else {
+    console.error("Canvas không tồn tại!");
+  }
+});
+
 }
+
