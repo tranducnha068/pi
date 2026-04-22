@@ -172,4 +172,20 @@ if (canvas && ctx) {
     resizeCanvas();
     createParticles();
   });
+  document.addEventListener("DOMContentLoaded", () => {
+  const canvas = document.getElementById("particleCanvas");
+  if (canvas) {
+    const ctx = canvas.getContext("2d");
+    resizeCanvas();
+    createParticles();
+    drawParticles();
+    window.addEventListener("resize", () => {
+      resizeCanvas();
+      createParticles();
+    });
+  } else {
+    console.error("Canvas không tồn tại!");
+  }
+});
+
 }
