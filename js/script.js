@@ -30,13 +30,13 @@ function updateCountdown() {
   const distance = targetDate - now;
 
   if (distance <= 0) {
-    if (countdownEls.days) countdownEls.days.textContent = "000";
-    if (countdownEls.hours) countdownEls.hours.textContent = "00";
-    if (countdownEls.minutes) countdownEls.minutes.textContent = "00";
-    if (countdownEls.seconds) countdownEls.seconds.textContent = "00";
+    countdownEls.days.textContent = "000";
+    countdownEls.hours.textContent = "00";
+    countdownEls.minutes.textContent = "00";
+    countdownEls.seconds.textContent = "00";
 
-    if (progressFill) progressFill.style.width = "100%";
-    if (progressPercent) progressPercent.textContent = "100%";
+    progressFill.style.width = "100%";
+    progressPercent.textContent = "100%";
 
     if (!hasRedirected) {
       hasRedirected = true;
@@ -52,10 +52,10 @@ function updateCountdown() {
   const minutes = Math.floor((distance / (1000 * 60)) % 60);
   const seconds = Math.floor((distance / 1000) % 60);
 
-  if (countdownEls.days) countdownEls.days.textContent = pad(days, 2);
-  if (countdownEls.hours) countdownEls.hours.textContent = pad(hours);
-  if (countdownEls.minutes) countdownEls.minutes.textContent = pad(minutes);
-  if (countdownEls.seconds) countdownEls.seconds.textContent = pad(seconds);
+  countdownEls.days.textContent = pad(days, 2);
+  countdownEls.hours.textContent = pad(hours);
+  countdownEls.minutes.textContent = pad(minutes);
+  countdownEls.seconds.textContent = pad(seconds);
 
   const totalDuration = targetDate - progressStartDate;
   const elapsedDuration = now - progressStartDate;
@@ -63,8 +63,8 @@ function updateCountdown() {
   let progress = (elapsedDuration / totalDuration) * 100;
   progress = Math.max(0, Math.min(progress, 100));
 
-  if (progressFill) progressFill.style.width = `${progress}%`;
-  if (progressPercent) progressPercent.textContent = `${Math.round(progress)}%`;
+  progressFill.style.width = `${progress}%`;
+  progressPercent.textContent = `${Math.round(progress)}%`;
 }
 
 function startCountdownLoop() {
@@ -96,8 +96,7 @@ async function startExperience() {
   }
 
   if (startPopup) {
-    // dùng class .hide để khớp CSS
-    startPopup.classList.add("hide");
+    startPopup.classList.add("hide"); // ẩn popup đúng với CSS
   }
 
   startCountdownLoop();
@@ -108,7 +107,9 @@ if (startBtn) {
 }
 
 /* ===== particle ===== */
-let canvas, ctx, particles = [];
+let canvas = null;
+let ctx = null;
+let particles = [];
 
 function resizeCanvas() {
   if (!canvas) return;
