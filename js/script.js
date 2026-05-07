@@ -1,8 +1,6 @@
-/* ===== setup dates ===== */
 const targetDate = new Date("2026-05-27T00:00:00");
 const progressStartDate = new Date("2025-08-01T00:00:00");
 
-/* ===== elements ===== */
 const startPopup = document.getElementById("startPopup");
 const startBtn = document.getElementById("startBtn");
 const bgMusic = document.getElementById("bgMusic");
@@ -30,13 +28,13 @@ function updateCountdown() {
   const distance = targetDate - now;
 
   if (distance <= 0) {
-    countdownEls.days.textContent = "000";
-    countdownEls.hours.textContent = "00";
-    countdownEls.minutes.textContent = "00";
-    countdownEls.seconds.textContent = "00";
+    if (countdownEls.days) countdownEls.days.textContent = "00";
+    if (countdownEls.hours) countdownEls.hours.textContent = "00";
+    if (countdownEls.minutes) countdownEls.minutes.textContent = "00";
+    if (countdownEls.seconds) countdownEls.seconds.textContent = "00";
 
-    progressFill.style.width = "100%";
-    progressPercent.textContent = "100%";
+    if (progressFill) progressFill.style.width = "100%";
+    if (progressPercent) progressPercent.textContent = "100%";
 
     if (!hasRedirected) {
       hasRedirected = true;
@@ -52,10 +50,10 @@ function updateCountdown() {
   const minutes = Math.floor((distance / (1000 * 60)) % 60);
   const seconds = Math.floor((distance / 1000) % 60);
 
-  countdownEls.days.textContent = pad(days, 2);
-  countdownEls.hours.textContent = pad(hours);
-  countdownEls.minutes.textContent = pad(minutes);
-  countdownEls.seconds.textContent = pad(seconds);
+  if (countdownEls.days) countdownEls.days.textContent = pad(days, 2);
+  if (countdownEls.hours) countdownEls.hours.textContent = pad(hours);
+  if (countdownEls.minutes) countdownEls.minutes.textContent = pad(minutes);
+  if (countdownEls.seconds) countdownEls.seconds.textContent = pad(seconds);
 
   const totalDuration = targetDate - progressStartDate;
   const elapsedDuration = now - progressStartDate;
@@ -63,24 +61,25 @@ function updateCountdown() {
   let progress = (elapsedDuration / totalDuration) * 100;
   progress = Math.max(0, Math.min(progress, 100));
 
-  progressFill.style.width = `${progress}%`;
-  progressPercent.textContent = `${Math.round(progress)}%`;
+  if (progressFill) progressFill.style.width = `${progress}%`;
+  if (progressPercent) progressPercent.textContent = `${Math.round(progress)}%`;
 }
 
 function startCountdownLoop() {
   updateCountdown();
+
   if (!countdownInterval) {
     countdownInterval = setInterval(updateCountdown, 1000);
   }
 }
 
 /* ===== popup + music ===== */
-async function startExperience() {
+function startExperience() {
   if (bgMusic) {
-    try {
-      bgMusic.volume = 0;
-      await bgMusic.play();
-
+    bgMusic.volume = 0;
+    
+    // Áp dụng chuẩn logic .catch() từ ảnh của bạn + giữ lại hiệu ứng fade in nhạc
+    bgMusic.play().then(() => {
       let volume = 0;
       const fadeAudio = setInterval(() => {
         volume += 0.05;
@@ -90,15 +89,17 @@ async function startExperience() {
         }
         bgMusic.volume = volume;
       }, 120);
-    } catch (error) {
-      console.log("Không phát được nhạc:", error);
-    }
+    }).catch(err => {
+      console.log("Autoplay bị chặn:", err);
+    });
   }
 
+  // Ẩn popup sau khi nhấn
   if (startPopup) {
-    startPopup.classList.add("hide"); // ẩn popup đúng với CSS
+    startPopup.style.display = "none";
   }
 
+  // Chạy đếm ngược
   startCountdownLoop();
 }
 
@@ -107,8 +108,8 @@ if (startBtn) {
 }
 
 /* ===== particle ===== */
-let canvas = null;
-let ctx = null;
+const canvas = document.getElementById("particleCanvas");
+const ctx = canvas ? canvas.getContext("2d") : null;
 let particles = [];
 
 function resizeCanvas() {
@@ -164,20 +165,13 @@ function drawParticles() {
   requestAnimationFrame(drawParticles);
 }
 
-/* ===== init after DOM ready ===== */
-document.addEventListener("DOMContentLoaded", () => {
-  canvas = document.getElementById("particleCanvas");
-  if (canvas) {
-    ctx = canvas.getContext("2d");
+if (canvas && ctx) {
+  resizeCanvas();
+  createParticles();
+  drawParticles();
+
+  window.addEventListener("resize", () => {
     resizeCanvas();
     createParticles();
-    drawParticles();
-
-    window.addEventListener("resize", () => {
-      resizeCanvas();
-      createParticles();
-    });
-  } else {
-    console.error("Canvas không tồn tại!");
-  }
-});
+  });
+}
